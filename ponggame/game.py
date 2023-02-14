@@ -1,6 +1,10 @@
+# Mario Linares
+
+
 """A pong game."""
 
 import pygame
+from ponggame.scene import TitleScene
 
 
 class Pong:
@@ -23,7 +27,7 @@ class Pong:
     def build_scene_graph(self):
         """Builds the scenes of the game."""
         self._scene_graph = [
-
+            TitleScene("Pong!", self._screen, (0, 0, 0))
         ]
 
     def run(self):

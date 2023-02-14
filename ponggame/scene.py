@@ -39,3 +39,19 @@ class Scene:
         if event.type == pygame.KEYDOWN and \
             event.key == pygame.K_SPACE:
             self._is_valid = False
+
+class TitleScene(Scene):
+    def __init__(self, title, screen, background_color, soundtrack=None):
+        """Initialize a title scene."""
+        super().__init__(screen, background_color)
+        self._title = title
+
+    def draw(self):
+        """Draw the TitleScene."""
+        super().draw()
+        (width, height) = self._screen.get_size()
+        title_font = pygame.font.Font(pygame.font.get_default_font(), 70)
+        rendered_title = title_font.render(self._title, True, (0, 250, 0))
+        title_position = rendered_title.get_rect(center=(width / 2, height / 2))
+
+        self._screen.blit(rendered_title, title_position)
