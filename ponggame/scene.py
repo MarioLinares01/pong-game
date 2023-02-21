@@ -40,7 +40,9 @@ class Scene:
             event.key == pygame.K_SPACE:
             self._is_valid = False
 
+
 class TitleScene(Scene):
+    """A child of Scene that represents a Title scene."""
     def __init__(self, title, screen, background_color, soundtrack=None):
         """Initialize a title scene."""
         super().__init__(screen, background_color)
@@ -50,7 +52,7 @@ class TitleScene(Scene):
         """Draw the TitleScene."""
         super().draw()
         (width, height) = self._screen.get_size()
-        title_font = pygame.font.Font(pygame.font.get_default_font(), 70)
+        title_font = pygame.font.Font("assets/fonts/square_sans_serif_7.ttf", 70)
         rendered_title = title_font.render(self._title, True, (0, 250, 0))
         title_position = rendered_title.get_rect(center=(width / 2, height / 2))
 

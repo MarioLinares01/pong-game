@@ -9,10 +9,9 @@ from ponggame.scene import TitleScene
 
 class Pong:
     """This class represents a Pong game."""
-
-    def __init__(self, window_width=600, wind_height=600, window_title="Pong!"):
+    def __init__(self, window_width=600, window_height=600, window_title="Pong!"):
         pygame.init()
-        self._window_size = (window_width, wind_height)
+        self._window_size = (window_width, window_height)
         self._clock = pygame.time.Clock()
         self._screen = pygame.display.set_mode(self._window_size)
         self._title = window_title
