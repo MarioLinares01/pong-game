@@ -8,6 +8,7 @@ import pygame
 
 class Scene:
     """This class represents the scenes in a Pong game."""
+
     def __init__(self, screen, background_color, soundtrack=None):
         """Initialize a Scene object."""
         self._screen = screen
@@ -43,6 +44,7 @@ class Scene:
 
 class TitleScene(Scene):
     """A child of Scene that represents a Title scene."""
+
     def __init__(self, title, screen, background_color, soundtrack=None):
         """Initialize a title scene."""
         super().__init__(screen, background_color)
@@ -57,3 +59,14 @@ class TitleScene(Scene):
         title_position = rendered_title.get_rect(center=(width / 2, height / 2))
 
         self._screen.blit(rendered_title, title_position)
+
+
+class GameScene(Scene):
+    """A child of Scene that represents a Game scene."""
+    def __init__(self, screen, background_color):
+        super().__init__(screen, background_color)
+        self._frame_rate = 60
+    
+    def draw(self):
+        """Draw a game scene."""
+        super().draw()

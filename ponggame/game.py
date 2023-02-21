@@ -4,11 +4,13 @@
 """A pong game."""
 
 import pygame
+from ponggame.scene import GameScene
 from ponggame.scene import TitleScene
 
 
 class Pong:
     """This class represents a Pong game."""
+
     def __init__(self, window_width=600, window_height=600, window_title="Pong!"):
         pygame.init()
         self._window_size = (window_width, window_height)
@@ -26,7 +28,8 @@ class Pong:
     def build_scene_graph(self):
         """Builds the scenes of the game."""
         self._scene_graph = [
-            TitleScene("Pong!", self._screen, (0, 0, 0))
+            TitleScene("Pong!", self._screen, (0, 0, 0)),
+            GameScene(self._screen, (0, 0, 0))
         ]
 
     def run(self):
