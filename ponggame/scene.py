@@ -45,12 +45,10 @@ class Scene:
 class TitleScene(Scene):
     """A child of Scene that represents a Title scene."""
 
-    def __init__(self, title, screen, background_color, soundtrack="ponggame/assets/audio/Timo Versemann - Danket, Danket dem Herrn.mp3"):
+    def __init__(self, title, screen, background_color, soundtrack=None):
         """Initialize a title scene."""
         super().__init__(screen, background_color)
         self._title = title
-        pygame.mixer.music.load(soundtrack)
-        pygame.mixer.music.play(-1)
 
     def draw(self):
         """Draw the TitleScene."""
