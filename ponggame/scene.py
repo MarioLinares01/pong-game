@@ -54,7 +54,7 @@ class TitleScene(Scene):
         """Draw the TitleScene."""
         super().draw()
         (width, height) = self._screen.get_size()
-        title_font = pygame.font.Font(None, 70)
+        title_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 70)
         rendered_title = title_font.render(self._title, True, (0, 250, 0))
         title_position = rendered_title.get_rect(center=(width / 2, height / 2))
 
