@@ -66,7 +66,15 @@ class GameScene(Scene):
     def __init__(self, screen, background_color):
         super().__init__(screen, background_color)
         self._frame_rate = 60
+        self._ai_score = "0"
+        self._player_score = 0
     
     def draw(self):
         """Draw a game scene."""
         super().draw()
+        (width, height) = self._screen.get_size()
+        midline = pygame.draw.line(self._screen, (0, 255, 0), [0, height / 2], [600, height / 2], width=3)
+
+        # add AI numberscore
+        
+        # add player numberscore 
