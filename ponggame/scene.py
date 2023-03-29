@@ -4,6 +4,7 @@
 """A Scene class which represents all scenes in a Pong game."""
 
 import pygame
+from ponggame.paddle import Paddle
 
 
 class Scene:
@@ -68,6 +69,7 @@ class GameScene(Scene):
         self._frame_rate = 60
         self._ai_score = 0
         self._player_score = 0
+        self._paddle = Paddle(self._screen)
     
     def draw(self):
         """Draw a game scene."""
@@ -83,3 +85,8 @@ class GameScene(Scene):
         player_rendered_score = score_font.render(str(self._player_score), True, (0, 250, 0))
         player_score_position = player_rendered_score.get_rect(center=(570, 328))
         self._screen.blit(player_rendered_score, player_score_position)
+
+        self._paddle.draw()
+    
+    def update(self):
+        self._paddle.move()
