@@ -76,5 +76,10 @@ class GameScene(Scene):
         midline = pygame.draw.line(self._screen, (0, 255, 0), [0, height / 2], [600, height / 2], width=3)
 
         # add AI numberscore
-        
+        ai_score_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 70)
+        ai_rendered_score = ai_score_font.render(self._ai_score, True, (0, 250, 0))
+        ai_position = ai_rendered_score.get_rect(center=(570, 270))
+        self._screen.blit(ai_rendered_score, ai_position)
+        print(ai_position)
         # add player numberscore 
+        
