@@ -25,12 +25,11 @@ class Paddle:
         pygame.key.set_repeat(1, 10)
         key = pygame.key.get_pressed()
         if key[pygame.K_RIGHT]:
-            
-            self._paddle.move_ip(self._speed, 0)
+            if self._paddle.x < 510:
+                self._paddle.move_ip(self._speed, 0)
         elif key[pygame.K_LEFT]:
-            pygame.key.get_repeat()
-            self._paddle.move_ip(-1 * self._speed, 0)
-
+             if self._paddle.x > 10:
+                self._paddle.move_ip(-1 * self._speed, 0)
 
     def does_collide(self):
         """Check if the paddle collides with a ball."""
