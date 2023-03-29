@@ -66,7 +66,20 @@ class GameScene(Scene):
     def __init__(self, screen, background_color):
         super().__init__(screen, background_color)
         self._frame_rate = 60
+        self._ai_score = 0
+        self._player_score = 0
     
     def draw(self):
         """Draw a game scene."""
         super().draw()
+        (width, height) = self._screen.get_size()
+        midline = pygame.draw.line(self._screen, (0, 255, 0), [0, height / 2], [600, height / 2], width=3)
+
+        score_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 70)
+        ai_rendered_score = score_font.render(str(self._ai_score), True, (0, 250, 0))
+        ai_score_position = ai_rendered_score.get_rect(center=(570, 272))
+        self._screen.blit(ai_rendered_score, ai_score_position)
+
+        player_rendered_score = score_font.render(str(self._player_score), True, (0, 250, 0))
+        player_score_position = player_rendered_score.get_rect(center=(570, 328))
+        self._screen.blit(player_rendered_score, player_score_position)
