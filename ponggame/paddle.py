@@ -22,7 +22,6 @@ class Paddle:
 
     def move(self):
         """Move the paddle."""
-        pygame.key.set_repeat(1, 10)
         key = pygame.key.get_pressed()
         if key[pygame.K_RIGHT]:
             if self._paddle.x < 510:

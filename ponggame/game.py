@@ -39,8 +39,8 @@ class Pong:
                 self._clock.tick(scene.frame_rate)
                 for event in pygame.event.get():
                     scene.handle_event(event)
-                    scene.update()
-                    scene.draw()
-                    pygame.display.update()
+                scene.update()
+                scene.draw()
+                pygame.display.update()
         pygame.quit()
         return 0
