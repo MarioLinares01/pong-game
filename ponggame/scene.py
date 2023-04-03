@@ -96,5 +96,9 @@ class GameScene(Scene):
     
     def update(self):
         self._paddle.move()
-        self._ball.bounce()
+        self._ai.move(self._ball._ball)
+        self._ball.update()
         self._ball.does_collide(self._paddle._paddle)
+        self._ball.does_collide(self._ai._paddle)
+
+        # change score

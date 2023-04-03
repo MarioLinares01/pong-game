@@ -14,7 +14,7 @@ class Paddle:
         self._surface = surface
         self._color = (255, 255, 255)
         self._paddle = pygame.Rect(290, 570, 80, 8)
-        self._speed = 10
+        self._speed = 8
 
     def draw(self):
         """Draw the Paddle."""
@@ -37,6 +37,12 @@ class AI(Paddle):
         """Imitializes the AI paddle."""
         super().__init__(surface)
         self._paddle = pygame.Rect(290, 5, 80, 8)
-        self._speed = 5
+        self._speed = 6
 
-    
+    def move(self, ball):
+        """AI paddle move."""
+        if self._paddle.center < (ball.x, ball.y) and ball.y < 300:
+            self._paddle.move_ip(self._speed, 0)
+        if self._paddle.center > (ball.x, ball.y) and ball.y < 300:
+            self._paddle.move_ip(-1 * self._speed, 0)
+
