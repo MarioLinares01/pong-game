@@ -14,7 +14,47 @@ class Ball:
         self._surface = surface
         self._color = (255, 255, 255)
         self._ball = pygame.Rect(300, 300, 12, 12)
+        (self._width, self._height) = self._surface.get_size()
+        self._x_velocity = 5
+        self._y_velocity = 4
+        self._ai_score = 0
+        self._player_score = 0
 
     def draw(self):
         """Draw the Ball."""
         pygame.draw.rect(self._surface, self._color, self._ball)
+
+    def bounce(self):
+        """Bounce the ball off the walls."""
+        # bounce of the balls
+        if self._ball.x >= self._width or self._ball.x < 0:
+            self._x_velocity *= -1
+            self._ball.x += self._x_velocity
+
+    def update(self):
+        self._ball.x += self._x_velocity
+        self._ball.y += self._y_velocity
+        self.bounce()
+
+        if self._ball.y >= self._height:
+            self.reset_ball()
+            self._ai_score += 1
+        if self._ball.y < 0:
+            self.reset_ball()
+            self._player_score += 1
+
+    def reset_ball(self):
+        """Rest the positon of the ball to the middle."""
+        self._ball.x = 300
+        self._ball.y = 300
+        self._y_velocity *= -1
+    
+    def reflect(self):
+        """Reflect the ball."""
+        self._y_velocity *= -1
+    
+    def does_collide(self, paddle):
+        """Check if ball collides with a paddle."""
+        collide = pygame.Rect.colliderect(self._ball, paddle)
+        if collide:
+            self.reflect()

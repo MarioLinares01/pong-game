@@ -6,6 +6,7 @@
 import pygame
 from ponggame.ball import Ball
 from ponggame.paddle import Paddle
+from ponggame.paddle import AI
 
 
 class Scene:
@@ -72,6 +73,7 @@ class GameScene(Scene):
         self._player_score = 0
         self._paddle = Paddle(self._screen)
         self._ball = Ball(self._screen)
+        self._ai = AI(self._screen)
     
     def draw(self):
         """Draw a game scene."""
@@ -89,7 +91,26 @@ class GameScene(Scene):
         self._screen.blit(player_rendered_score, player_score_position)
 
         self._paddle.draw()
+        self._ai.draw()
         self._ball.draw()
     
+    def update_score(self):
+        """Update the scoreboard."""
+        score_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 70)
+        ai_rendered_score = score_font.render(str(self._ai_score), True, (0, 250, 0))
+        ai_score_position = ai_rendered_score.get_rect(center=(570, 272))
+        self._screen.blit(ai_rendered_score, ai_score_position)
+
+        player_rendered_score = score_font.render(str(self._player_score), True, (0, 250, 0))
+        player_score_position = player_rendered_score.get_rect(center=(570, 328))
+        self._screen.blit(player_rendered_score, player_score_position)
+
     def update(self):
         self._paddle.move()
+        self._ai.move(self._ball._ball)
+        self._ball.update()
+        self._ai_score = self._ball._ai_score
+        self._player_score = self._ball._player_score
+        self._ball.does_collide(self._paddle._paddle)
+        self._ball.does_collide(self._ai._paddle)
+        self.update_score()
