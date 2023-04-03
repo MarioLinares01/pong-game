@@ -15,8 +15,8 @@ class Ball:
         self._color = (255, 255, 255)
         self._ball = pygame.Rect(300, 300, 12, 12)
         (self._width, self._height) = self._surface.get_size()
-        self._x_velocity = 3
-        self._y_velocity = 6
+        self._x_velocity = 5
+        self._y_velocity = 4
 
     def draw(self):
         """Draw the Ball."""
@@ -37,13 +37,12 @@ class Ball:
         if self._ball.y >= self._height or self._ball.y < 0:
             self.reset_ball()
             # change score
-        
-
 
     def reset_ball(self):
         """Rest the positon of the ball to the middle."""
         self._ball.x = 300
         self._ball.y = 300
+        self._y_velocity *= -1
     
     def reflect(self):
         """Reflect the ball."""
