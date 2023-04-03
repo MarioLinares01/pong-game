@@ -6,6 +6,7 @@
 import pygame
 from ponggame.ball import Ball
 from ponggame.paddle import Paddle
+from ponggame.paddle import AI
 
 
 class Scene:
@@ -72,6 +73,7 @@ class GameScene(Scene):
         self._player_score = 0
         self._paddle = Paddle(self._screen)
         self._ball = Ball(self._screen)
+        self._ai = AI(self._screen)
     
     def draw(self):
         """Draw a game scene."""
@@ -89,7 +91,10 @@ class GameScene(Scene):
         self._screen.blit(player_rendered_score, player_score_position)
 
         self._paddle.draw()
+        self._ai.draw()
         self._ball.draw()
     
     def update(self):
         self._paddle.move()
+        self._ball.bounce()
+        self._ball.does_collide(self._paddle._paddle)
