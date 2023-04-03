@@ -17,6 +17,8 @@ class Ball:
         (self._width, self._height) = self._surface.get_size()
         self._x_velocity = 5
         self._y_velocity = 4
+        self._ai_score = 0
+        self._player_score = 0
 
     def draw(self):
         """Draw the Ball."""
@@ -34,9 +36,12 @@ class Ball:
         self._ball.y += self._y_velocity
         self.bounce()
 
-        if self._ball.y >= self._height or self._ball.y < 0:
+        if self._ball.y >= self._height:
             self.reset_ball()
-            # change score
+            self._ai_score += 1
+        if self._ball.y < 0:
+            self.reset_ball()
+            self._player_score += 1
 
     def reset_ball(self):
         """Rest the positon of the ball to the middle."""
