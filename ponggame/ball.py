@@ -15,6 +15,7 @@ class Ball:
         self._color = (255, 255, 255)
         self._ball = pygame.Rect(300, 300, 12, 12)
         self._bounce_effect = pygame.mixer.Sound("ponggame/assets/audio/zapsplat_cartoon_pop_mouth_mid_pitch_003_86613.mp3")
+        self._score_effect = pygame.mixer.Sound("ponggame/assets/audio/zapsplat_multimedia_game_sound_bright_win_bonus_complete_tone_78303.mp3")
         (self._width, self._height) = self._surface.get_size()
         self._x_velocity = 5
         self._y_velocity = 4
@@ -41,9 +42,11 @@ class Ball:
         if self._ball.y >= self._height:
             self.reset_ball()
             self._ai_score += 1
+            self.score_effect()
         if self._ball.y < 0:
             self.reset_ball()
             self._player_score += 1
+            self.score_effect()
 
     def reset_ball(self):
         """Rest the positon of the ball to the middle."""
@@ -58,6 +61,10 @@ class Ball:
     def bounce_effect(self):
         """Play the bounce sound effect."""
         pygame.mixer.Sound.play(self._bounce_effect)
+
+    def score_effect(self):
+        """PLays sound when a player scores."""
+        pygame.mixer.Sound.play(self._score_effect)
 
     def does_collide(self, paddle):
         """Check if ball collides with a paddle."""
