@@ -50,10 +50,8 @@ class Ball:
 
     def reset_ball(self):
         """Rest the positon of the ball to the middle."""
-        self._ball.x = 300
-        self._ball.y = 300
-        self._y_velocity *= -1
-    
+        self._ball = pygame.Rect(300, 300, 12, 12)
+
     def reflect(self):
         """Reflect the ball."""
         self._y_velocity *= -1
