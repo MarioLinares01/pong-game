@@ -57,6 +57,10 @@ class Ball:
         self._x_velocity = 0
         self._y_velocity = 0
 
+    def unfreeze_ball(self):
+        self._x_velocity = 5
+        self._y_velocity = 4
+
     def reflect(self):
         """Reflect the ball."""
         self._y_velocity *= -1
