@@ -45,4 +45,3 @@ class AI(Paddle):
             self._paddle.move_ip(self._speed, 0)
         if self._paddle.center > (ball.x, ball.y):
             self._paddle.move_ip(-1 * self._speed, 0)
-

@@ -52,6 +52,15 @@ class Ball:
         """Rest the positon of the ball to the middle."""
         self._ball = pygame.Rect(300, 300, 12, 12)
 
+    def freeze_ball(self):
+        self._ball = pygame.Rect(300, 300, 12, 12)
+        self._x_velocity = 0
+        self._y_velocity = 0
+
+    def unfreeze_ball(self):
+        self._x_velocity = 5
+        self._y_velocity = 4
+
     def reflect(self):
         """Reflect the ball."""
         self._y_velocity *= -1
