@@ -44,7 +44,6 @@ class Scene:
             event.key == pygame.K_SPACE:
             self._is_valid = False
 
-
 class TitleScene(Scene):
     """A child of Scene that represents a Title scene."""
 
@@ -69,12 +68,15 @@ class GameScene(Scene):
     def __init__(self, screen, background_color):
         super().__init__(screen, background_color)
         self._frame_rate = 60
+        self._clock = pygame.time.Clock()
+        self._winner = ""
+        self._play_again = ""
         self._ai_score = 0
         self._player_score = 0
         self._paddle = Paddle(self._screen)
         self._ball = Ball(self._screen)
         self._ai = AI(self._screen)
-    
+
     def draw(self):
         """Draw a game scene."""
         super().draw()
@@ -89,6 +91,16 @@ class GameScene(Scene):
         player_rendered_score = score_font.render(str(self._player_score), True, (0, 250, 0))
         player_score_position = player_rendered_score.get_rect(center=(570, 328))
         self._screen.blit(player_rendered_score, player_score_position)
+
+        replay_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 40)
+        replay_rendered = replay_font.render(self._winner, True, (0, 250, 0))
+        replay_position = replay_rendered.get_rect(center=(300, 200))
+        self._screen.blit(replay_rendered, replay_position)
+
+        replay_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 20)
+        replay_rendered = replay_font.render(self._play_again, True, (0, 250, 0))
+        replay_position = replay_rendered.get_rect(center=(300, 250))
+        self._screen.blit(replay_rendered, replay_position)
 
         self._paddle.draw()
         self._ai.draw()
@@ -105,7 +117,19 @@ class GameScene(Scene):
         player_score_position = player_rendered_score.get_rect(center=(570, 328))
         self._screen.blit(player_rendered_score, player_score_position)
 
+    def play_again(self):
+        """Loop the GameScene if player would like to play again."""
+        play_again = GameScene(self._screen, (0, 0, 0))
+        while play_again.is_valid:
+            self._clock.tick(play_again.frame_rate)
+            for event in pygame.event.get():
+                play_again.handle_event(event)
+            play_again.update()
+            play_again.draw()
+            pygame.display.update()
+
     def update(self):
+        """Update the GameScene"""
         self._paddle.move()
         self._ai.move(self._ball._ball)
         self._ball.update()
@@ -114,3 +138,21 @@ class GameScene(Scene):
         self._ball.does_collide(self._paddle._paddle)
         self._ball.does_collide(self._ai._paddle)
         self.update_score()
+        if self._ai_score == 5:
+            self._winner = "You lost!!"
+            self._play_again = "Would you like to play again?[y/n]"
+            self._ball.freeze_ball()
+            key = pygame.key.get_pressed()
+            if key[pygame.K_n]:
+                self._is_valid = False
+            elif key[pygame.K_y]:
+                self.play_again()
+        elif self._player_score == 5:
+            self._winner = "You won!!"
+            self._play_again = "Would you like to play again?[y/n]"
+            self._ball.freeze_ball()
+            key = pygame.key.get_pressed()
+            if key[pygame.K_n]:
+                self._is_valid = False
+            elif key[pygame.K_y]:
+                self.play_again()
