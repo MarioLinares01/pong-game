@@ -97,7 +97,7 @@ class GameScene(Scene):
         replay_position = replay_rendered.get_rect(center=(300, 200))
         self._screen.blit(replay_rendered, replay_position)
 
-        replay_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 20)
+        replay_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 18)
         replay_rendered = replay_font.render(self._play_again, True, (0, 250, 0))
         replay_position = replay_rendered.get_rect(center=(300, 250))
         self._screen.blit(replay_rendered, replay_position)
