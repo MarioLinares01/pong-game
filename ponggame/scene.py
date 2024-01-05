@@ -5,6 +5,7 @@
 
 import pygame
 from ponggame.ball import Ball
+from ponggame.button import Button
 from ponggame.paddle import Paddle
 from ponggame.paddle import AI
 
@@ -51,6 +52,7 @@ class TitleScene(Scene):
         """Initialize a title scene."""
         super().__init__(screen, background_color)
         self._title = title
+        self._play_button = Button(self._screen, 'Play', (255, 255, 255), 300, 300)
 
     def draw(self):
         """Draw the TitleScene."""
@@ -58,9 +60,16 @@ class TitleScene(Scene):
         (width, height) = self._screen.get_size()
         title_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 70)
         rendered_title = title_font.render(self._title, True, (0, 250, 0))
-        title_position = rendered_title.get_rect(center=(width / 2, height / 2))
+        title_position = rendered_title.get_rect(center=(width / 2, height / 3))
 
         self._screen.blit(rendered_title, title_position)
+        self._play_button.draw()
+
+    def update(self):
+        """Update the TitleScene."""
+        self._play_button.hover_text()
+        if self._play_button.button_pressed() == True:
+            self._is_valid = False
 
 
 class GameScene(Scene):
