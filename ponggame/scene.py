@@ -5,6 +5,7 @@
 
 import pygame
 from ponggame.ball import Ball
+from ponggame.button import Button
 from ponggame.paddle import Paddle
 from ponggame.paddle import AI
 
@@ -51,6 +52,7 @@ class TitleScene(Scene):
         """Initialize a title scene."""
         super().__init__(screen, background_color)
         self._title = title
+        self._play_button = Button(self._screen, 'Play', (255, 255, 255), 300, 300)
 
     def draw(self):
         """Draw the TitleScene."""
@@ -58,9 +60,16 @@ class TitleScene(Scene):
         (width, height) = self._screen.get_size()
         title_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 70)
         rendered_title = title_font.render(self._title, True, (0, 250, 0))
-        title_position = rendered_title.get_rect(center=(width / 2, height / 2))
+        title_position = rendered_title.get_rect(center=(width / 2, height / 3))
 
         self._screen.blit(rendered_title, title_position)
+        self._play_button.draw()
+
+    def update(self):
+        """Update the TitleScene."""
+        self._play_button.hover_text()
+        if self._play_button.button_pressed() == True:
+            self._is_valid = False
 
 
 class GameScene(Scene):
@@ -76,6 +85,8 @@ class GameScene(Scene):
         self._paddle = Paddle(self._screen)
         self._ball = Ball(self._screen)
         self._ai = AI(self._screen)
+        self._play_again_button = Button(self._screen, 'Play Again', (255, 255, 255), 300, 200)
+        self._quit_button = Button(self._screen, 'Quit', (255, 255, 255), 300, 250)
 
     def draw(self):
         """Draw a game scene."""
@@ -92,15 +103,20 @@ class GameScene(Scene):
         player_score_position = player_rendered_score.get_rect(center=(570, 328))
         self._screen.blit(player_rendered_score, player_score_position)
 
-        replay_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 40)
-        replay_rendered = replay_font.render(self._winner, True, (0, 250, 0))
-        replay_position = replay_rendered.get_rect(center=(300, 200))
-        self._screen.blit(replay_rendered, replay_position)
+        winner_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 65)
+        winner_rendered = winner_font.render(self._winner, True, (0, 250, 0))
+        winner_position = winner_rendered.get_rect(center=(300, 100))
+        self._screen.blit(winner_rendered, winner_position)
 
-        replay_font = pygame.font.Font("ponggame/assets/fonts/square_sans_serif_7.ttf", 18)
-        replay_rendered = replay_font.render(self._play_again, True, (0, 250, 0))
-        replay_position = replay_rendered.get_rect(center=(300, 250))
-        self._screen.blit(replay_rendered, replay_position)
+        if self._ai_score == 5 or self._player_score == 5:
+            self._play_again_button.draw()
+            self._quit_button.draw()
+            self._play_again_button.hover_text()
+            self._quit_button.hover_text()
+            if self._play_again_button.button_pressed():
+                self.play_again()
+            if self._quit_button.button_pressed():
+                self._is_valid = False
 
         self._paddle.draw()
         self._ai.draw()
@@ -140,19 +156,7 @@ class GameScene(Scene):
         self.update_score()
         if self._ai_score == 5:
             self._winner = "You lost!!"
-            self._play_again = "Would you like to play again?[y/n]"
             self._ball.freeze_ball()
-            key = pygame.key.get_pressed()
-            if key[pygame.K_n]:
-                self._is_valid = False
-            elif key[pygame.K_y]:
-                self.play_again()
         elif self._player_score == 5:
             self._winner = "You won!!"
-            self._play_again = "Would you like to play again?[y/n]"
             self._ball.freeze_ball()
-            key = pygame.key.get_pressed()
-            if key[pygame.K_n]:
-                self._is_valid = False
-            elif key[pygame.K_y]:
-                self.play_again()
